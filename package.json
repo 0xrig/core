@@ -1,0 +1,26 @@
+{
+    "name": "0xrig",
+    "version": "0.0.1",
+    "description": "Burnable Phone on Polygon.",
+    "main": "server.tsx",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "html": "python -m http.server 8000",
+        "server": "node server.tsx"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/0xrig/core.git"
+    },
+    "author": "Organik, Inc.",
+    "license": "MIT+Apache2 Dual License",
+    "bugs": {
+        "url": "https://github.com/0xrig/core/issues"
+    },
+    "dependencies": {
+        "fastify": "^3.27.4",
+        "fastify-cors": "^6.0.3",
+        "fastify-formbody": "^5.2.0"
+    },
+    "homepage": "https://github.com/0xrig/core#readme"
+}
