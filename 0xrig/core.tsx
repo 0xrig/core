@@ -15,6 +15,18 @@ exports.isJSON = function(str){
   }
   return true;
 }
+
+const processRigRequest = (endpoint, data)=>{
+  if(endpoint === `ping`){
+    return {
+      version: getEnvValue('VERSION'),
+      theme: getEnvValue('THEME'),
+      latest: getEnvValue('LATEST_VERSION')
+    }
+  }
+  return data
+}
+
 // read .env file & convert to array
 const readEnvVars = () => fs.readFileSync(envFilePath, "utf-8").split(os.EOL)
 /**
@@ -53,6 +65,28 @@ const setEnvValue = (key, value) => {
   // write everything back to the file system
   fs.writeFileSync(envFilePath, envVars.join(os.EOL));
 };
+
+exports.rigRequest = (req)=>{
+  var error = false
+  var data = req.query
+  var endpoint = req.params.endpoint
+  data = processRigRequest(endpoint, data)
+    // Process ENDPOINT and update (data) and (error)
+    return (req.query.callback !== undefined && req.query.callback !== 'undefined') ? `${req.query.callback}(${JSON.stringify({
+      method: "GET",
+      callback: req.query.callback,
+      data,
+      endpoint,
+      error,
+      userAgent: req.headers["user-agent"]
+    })})` : {
+      method: "GET",
+      data,
+      endpoint,
+      error,
+      userAgent: req.headers["user-agent"]
+    } ;
+  }
 
 exports.apiRequest = (req)=>{
 var error = false

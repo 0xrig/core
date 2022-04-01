@@ -1,0 +1,48 @@
+<!doctype html>
+<!-- 0xrig - Built for LFG at ETH Global Hackathon. March 22. -->
+<html lang="en">
+<head>
+    <title>0xrig Loader</title>
+    <style>
+        body{background:black;}
+    </style>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script>
+    'use strict';
+    $(window).on('load', function () {
+        console.log('Welcome to 0xrig', 'Checking for updates', 'Loading theme folder');
+        var url = `${window.location.href.split("gitpod.io").shift().replace("https://8000","https://3000")}gitpod.io/0xrig/ping`
+        $.ajax({
+                url: url,
+                dataType: 'jsonp',
+                success: function(rig){
+                    // 0xrig Server is online.
+                    $.ajax({
+                        // Update available?
+                        url: rig.data.latest,
+                        success: function(latest){
+                            var resp = JSON.parse(latest)
+                            if(resp.version !== rig.data.version){
+                                console.log(`Update Available: ${resp.version}`)
+                            }else{
+                                console.log(`You have the latest version: ${rig.data.version}`)
+                                // Redirect to active THEME folder.
+                                setTimeout(()=>{
+                                    window.location.href = rig.data.theme;
+                                },999)
+                            }
+                        }
+                    })
+                },
+                error: (e)=>{
+                    // 0xrig Server is offline.
+                    console.log(e.status)
+                }
+        });
+
+    });
+</script>
+</body>
+</html>
