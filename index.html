@@ -1,48 +1,529 @@
-<!doctype html>
-<!-- 0xrig - Built for LFG at ETH Global Hackathon. March 22. -->
+<!DOCTYPE html>
+<!-- Author: 0xrig.com Organik, Inc. © 2022 -->
 <html lang="en">
-<head>
-    <title>0xrig Loader</title>
-    <style>
-        body{background:black;}
-    </style>
-</head>
-<body>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-<script>
-    'use strict';
-    $(window).on('load', function () {
-        console.log('Welcome to 0xrig', 'Checking for updates', 'Loading theme folder');
-        var url = `${window.location.href.split("gitpod.io").shift().replace("https://8000","https://3000")}gitpod.io/0xrig/ping`
-        $.ajax({
-                url: url,
-                dataType: 'jsonp',
-                success: function(rig){
-                    // 0xrig Server is online.
-                    $.ajax({
-                        // Update available?
-                        url: rig.data.latest,
-                        success: function(latest){
-                            var resp = JSON.parse(latest)
-                            if(resp.version !== rig.data.version){
-                                console.log(`Update Available: ${resp.version}`)
-                            }else{
-                                console.log(`You have the latest version: ${rig.data.version}`)
-                                // Redirect to active THEME folder.
-                                setTimeout(()=>{
-                                    window.location.href = rig.data.theme;
-                                },999)
-                            }
-                        }
-                    })
-                },
-                error: (e)=>{
-                    // 0xrig Server is offline.
-                    console.log(e.status)
-                }
-        });
+	<!--begin::Head-->
+	<head><base href="">
+		<title>0xrig by Organik, Inc.</title>
+		<meta charset="utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta property="og:locale" content="en_US" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Free Crypto Phone" />
+		<meta property="og:url" content="https://0xrig.com" />
+		<meta property="og:site_name" content="0xrig | Organik, Inc." />
+		<link rel="canonical" href="https://0xrig.com" />
+		<link rel="shortcut icon" href="themes/original/assets/media/logos/favicon.ico" />
+		<!--begin::Fonts-->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+		<!--end::Fonts-->
+		<!--begin::Global Stylesheets Bundle(used by all pages)-->
+		<link href="themes/original/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="themes/original/assets/css/style.dark.bundle.css" rel="stylesheet" type="text/css" />
+		<!--end::Global Stylesheets Bundle-->
+	</head>
+	<!--end::Head-->
+	<!--begin::Body-->
+	<body id="kt_body" class="page-bg">
+		<!--begin::Main-->
+		<!--begin::Root-->
+		<div class="d-flex flex-column flex-root" style="display:none !important;">
+			<!--begin::Page-->
+			<div class="page launcher sidebar-enabled d-flex flex-row flex-column-fluid me-lg-5" id="kt_page">
+				<!--begin::Content-->
+				<div class="d-flex flex-row-fluid">
+					<!--begin::Container-->
+					<div class="d-flex flex-column flex-row-fluid align-items-center">
+						<!--begin::Menu-->
+						<div class="d-flex flex-column flex-column-fluid mb-5 mb-lg-10">
+							<!--begin::Row-->
+							<div class="row g-7 w-xxl-850px">
+								<!--begin::Col-->
+								<div class="col-xxl-5" style="max-height:300px;">
+									<!--begin::Card-->
+									<div class="card border-0 shadow-none h-lg-100">
+										<!--begin::Card body-->
+										<div class="card-body d-flex flex-column flex-center pb-0 pt-15">
+											<!--begin::Wrapper-->
+											<div class="px-10 mb-10">
+												<!--begin::Heading-->
+												<h3 class="text-white mb-2 fw-boldest ttext-center mb-6">
+													<!--begin::Svg Icon | path: media/icons/duotune/general/gen017.svg-->
+													<span class="svg-icon svg-icon-white svg-icon-2hx"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+													<path opacity="0.3" d="M5 8.04999L11.8 11.95V19.85L5 15.85V8.04999Z" fill="currentColor"/>
+													<path d="M20.1 6.65L12.3 2.15C12 1.95 11.6 1.95 11.3 2.15L3.5 6.65C3.2 6.85 3 7.15 3 7.45V16.45C3 16.75 3.2 17.15 3.5 17.25L11.3 21.75C11.5 21.85 11.6 21.85 11.8 21.85C12 21.85 12.1 21.85 12.3 21.75L20.1 17.25C20.4 17.05 20.6 16.75 20.6 16.45V7.45C20.6 7.15 20.4 6.75 20.1 6.65ZM5 15.85V7.95L11.8 4.05L18.6 7.95L11.8 11.95V19.85L5 15.85Z" fill="currentColor"/>
+													</svg></span>
+													<!--end::Svg Icon-->
+													0xrig</h3>
+												<!--end::Heading-->
+												<!--begin::List-->
+												<div class="mb-7">
+													<!--begin::Item-->
+													<div class="d-flex align-items-center mb-2 statusField">
+													</div>
+													<!--end::Item-->
+													<!--begin::Item-->
+													<div class="d-flex align-items-center mb-2 bg-hover-success walletField" style="border-radius:15px;padding-left: 10px;padding-right: 10px;margin-left: -10px;">
+													</div>
+													<!--end::Item-->
+													<!--begin::Item-->
+													<div class="d-flex align-items-center mb-2 balanceField">
+													</div>
+													<!--end::Item-->
+												</div>
+												<!--end::List-->
+												<!--begin::Link-->
+												<a href="#" onclick="refresh(event)" style="display:none;" class="btn btn-hover-rise text-white bg-white bg-opacity-10 text-uppercase fs-7 fw-bolder 0xBtnRefresh">
+													Try Again</a>
+												<!--end::Link-->
+											</div>
+											<!--end::Wrapper-->
+										</div>
+										<!--end::Card body-->
+									</div>
+									<!--end::Card-->
+								</div>
+								<!--end::Col-->
+								<!--begin::Col-->
+								<div class="col-xxl-7">
+									<!--begin::Row-->
+									
+									
+									<div class="card">
+										<!--begin::Header-->
+										<div class="card-header border-0 pt-5">
+											<h3 class="card-title align-items-start flex-column">
+												<span class="card-label fw-bolder text-dark">Setup Wizard</span>
+												<span class="text-muted mt-1 fw-bold fs-7">Completed 
+													<strong class="text-info 0xVarSteps">0/5</strong> Steps</span>
+											</h3>
+										</div>
+										<!--end::Header-->
+										<!--begin::Body-->
+										<div class="card-body pt-5 stepsContainer">
+											<!--begin::Item-->
+											<div class="d-flex align-items-center mb-7">
+												<!--begin::Symbol-->
+												<div class="symbol symbol-50px me-5">
+													<span class="symbol-label bg-light-primary">
+														<!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
+														<span class="svg-icon svg-icon-2x svg-icon-info">
+															<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																<path opacity="0.3" d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z" fill="currentColor"></path>
+																<path d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z" fill="currentColor"></path>
+															</svg>
+														</span>
+														<!--end::Svg Icon-->
+													</span>
+												</div>
+												<!--end::Symbol-->
+												<!--begin::Text-->
+												<div class="d-flex flex-column">
+													<a href="#" class="text-dark text-hover-primary fs-6 fw-bolder">
+														0xCore Server</a>
+													<span class="text-muted fw-bold">Checking . . .</span>
+												</div>
+												<!--end::Text-->
+											</div>
+											<!--end::Item-->
+											<!--begin::Item-->
+											<div class="d-flex align-items-center mb-7">
+												<!--begin::Symbol-->
+												<div class="symbol symbol-50px me-5">
+													<span class="symbol-label bg-light-primary">
+														<!--begin::Svg Icon | path: media/icons/duotune/general/gen005.svg-->
+														<span class="svg-icon svg-icon-info svg-icon-2hx"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+														<path opacity="0.3" d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM12.5 18C12.5 17.4 12.6 17.5 12 17.5H8.5C7.9 17.5 8 17.4 8 18C8 18.6 7.9 18.5 8.5 18.5L12 18C12.6 18 12.5 18.6 12.5 18ZM16.5 13C16.5 12.4 16.6 12.5 16 12.5H8.5C7.9 12.5 8 12.4 8 13C8 13.6 7.9 13.5 8.5 13.5H15.5C16.1 13.5 16.5 13.6 16.5 13ZM12.5 8C12.5 7.4 12.6 7.5 12 7.5H8C7.4 7.5 7.5 7.4 7.5 8C7.5 8.6 7.4 8.5 8 8.5H12C12.6 8.5 12.5 8.6 12.5 8Z" fill="currentColor"/>
+														<rect x="7" y="17" width="6" height="2" rx="1" fill="currentColor"/>
+														<rect x="7" y="12" width="10" height="2" rx="1" fill="currentColor"/>
+														<rect x="7" y="7" width="6" height="2" rx="1" fill="currentColor"/>
+														<path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="currentColor"/>
+														</svg></span>
+														<!--end::Svg Icon-->
+													</span>
+												</div>
+												<!--end::Symbol-->
+												<!--begin::Text-->
+												<div class="d-flex flex-column">
+													<a href="#" class="text-dark text-hover-primary fs-6 fw-bolder">
+														.env File</a>
+													<span class="text-muted fw-bold">Searching . . .</span>
+												</div>
+												<!--end::Text-->
+											</div>
+											<!--end::Item-->
+											<!--begin::Item-->
+											<div class="d-flex align-items-center mb-7">
+												<!--begin::Symbol-->
+												<div class="symbol symbol-50px me-5">
+													<span class="symbol-label bg-light-primary">
+														<!--begin::Svg Icon | path: icons/duotune/general/gen049.svg-->
+														<span class="svg-icon svg-icon-2x svg-icon-info">
+															<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																<path opacity="0.3" d="M20.5543 4.37824L12.1798 2.02473C12.0626 1.99176 11.9376 1.99176 11.8203 2.02473L3.44572 4.37824C3.18118 4.45258 3 4.6807 3 4.93945V13.569C3 14.6914 3.48509 15.8404 4.4417 16.984C5.17231 17.8575 6.18314 18.7345 7.446 19.5909C9.56752 21.0295 11.6566 21.912 11.7445 21.9488C11.8258 21.9829 11.9129 22 12.0001 22C12.0872 22 12.1744 21.983 12.2557 21.9488C12.3435 21.912 14.4326 21.0295 16.5541 19.5909C17.8169 18.7345 18.8277 17.8575 19.5584 16.984C20.515 15.8404 21 14.6914 21 13.569V4.93945C21 4.6807 20.8189 4.45258 20.5543 4.37824Z" fill="currentColor"></path>
+																<path d="M12.0006 11.1542C13.1434 11.1542 14.0777 10.22 14.0777 9.0771C14.0777 7.93424 13.1434 7 12.0006 7C10.8577 7 9.92348 7.93424 9.92348 9.0771C9.92348 10.22 10.8577 11.1542 12.0006 11.1542Z" fill="currentColor"></path>
+																<path d="M15.5652 13.814C15.5108 13.6779 15.4382 13.551 15.3566 13.4331C14.9393 12.8163 14.2954 12.4081 13.5697 12.3083C13.479 12.2993 13.3793 12.3174 13.3067 12.3718C12.9257 12.653 12.4722 12.7981 12.0006 12.7981C11.5289 12.7981 11.0754 12.653 10.6944 12.3718C10.6219 12.3174 10.5221 12.2902 10.4314 12.3083C9.70578 12.4081 9.05272 12.8163 8.64456 13.4331C8.56293 13.551 8.49036 13.687 8.43595 13.814C8.40875 13.8684 8.41781 13.9319 8.44502 13.9864C8.51759 14.1133 8.60828 14.2403 8.68991 14.3492C8.81689 14.5215 8.95295 14.6757 9.10715 14.8208C9.23413 14.9478 9.37925 15.0657 9.52439 15.1836C10.2409 15.7188 11.1026 15.9999 11.9915 15.9999C12.8804 15.9999 13.7421 15.7188 14.4586 15.1836C14.6038 15.0748 14.7489 14.9478 14.8759 14.8208C15.021 14.6757 15.1661 14.5215 15.2931 14.3492C15.3838 14.2312 15.4655 14.1133 15.538 13.9864C15.5833 13.9319 15.5924 13.8684 15.5652 13.814Z" fill="currentColor"></path>
+															</svg>
+														</span>
+														<!--end::Svg Icon-->
+													</span>
+												</div>
+												<!--end::Symbol-->
+												<!--begin::Text-->
+												<div class="d-flex flex-column">
+													<a href="#" class="text-dark text-hover-primary fs-6 fw-bolder">
+														Private Key</a>
+													<span class="text-muted fw-bold">Verifying . . .</span>
+												</div>
+												<!--end::Text-->
+											</div>
+											<!--end::Item-->
+											<!--begin::Item-->
+											<div class="d-flex align-items-center mb-7">
+												<!--begin::Symbol-->
+												<div class="symbol symbol-50px me-5">
+													<span class="symbol-label bg-light-primary">
+														<!--begin::Svg Icon | path: media/icons/duotune/abstract/abs014.svg-->
+														<span class="svg-icon svg-icon-info svg-icon-2hx"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+														<path opacity="0.3" d="M11.8 5.2L17.7 8.6V15.4L11.8 18.8L5.90001 15.4V8.6L11.8 5.2ZM11.8 2C11.5 2 11.2 2.1 11 2.2L3.8 6.4C3.3 6.7 3 7.3 3 7.9V16.2C3 16.8 3.3 17.4 3.8 17.7L11 21.9C11.3 22 11.5 22.1 11.8 22.1C12.1 22.1 12.4 22 12.6 21.9L19.8 17.7C20.3 17.4 20.6 16.8 20.6 16.2V7.9C20.6 7.3 20.3 6.7 19.8 6.4L12.6 2.2C12.4 2.1 12.1 2 11.8 2Z" fill="currentColor"/>
+														<path d="M11.8 8.69995L8.90001 10.3V13.7L11.8 15.3L14.7 13.7V10.3L11.8 8.69995Z" fill="currentColor"/>
+														</svg></span>
+														<!--end::Svg Icon-->
+													</span>
+												</div>
+												<!--end::Symbol-->
+												<!--begin::Text-->
+												<div class="d-flex flex-column">
+													<a href="#" class="text-dark text-hover-primary fs-6 fw-bolder">
+														Phone Profile</a>
+													<span class="text-muted fw-bold">Reading . . .</span>
+												</div>
+												<!--end::Text-->
+											</div>
+											<!--end::Item-->
+											<!--begin::Item-->
+											<div class="d-flex align-items-center mb-0">
+												<!--begin::Symbol-->
+												<div class="symbol symbol-50px me-5">
+													<span class="symbol-label bg-light-primary">
+														<!--begin::Svg Icon | path: media/icons/duotune/communication/com001.svg-->
+														<span class="svg-icon svg-icon-info svg-icon-2hx"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+														<path opacity="0.3" d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" fill="currentColor"/>
+														<path d="M19 10.4C19 10.3 19 10.2 19 10C19 8.9 18.1 8 17 8H16.9C15.6 6.2 14.6 4.29995 13.9 2.19995C13.3 2.09995 12.6 2 12 2C11.9 2 11.8 2 11.7 2C12.4 4.6 13.5 7.10005 15.1 9.30005C15 9.50005 15 9.7 15 10C15 11.1 15.9 12 17 12C17.1 12 17.3 12 17.4 11.9C18.6 13 19.9 14 21.4 14.8C21.4 14.8 21.5 14.8 21.5 14.9C21.7 14.2 21.8 13.5 21.9 12.7C20.9 12.1 19.9 11.3 19 10.4Z" fill="currentColor"/>
+														<path d="M12 15C11 13.1 10.2 11.2 9.60001 9.19995C9.90001 8.89995 10 8.4 10 8C10 7.1 9.40001 6.39998 8.70001 6.09998C8.40001 4.99998 8.20001 3.90005 8.00001 2.80005C7.30001 3.10005 6.70001 3.40002 6.20001 3.90002C6.40001 4.80002 6.50001 5.6 6.80001 6.5C6.40001 6.9 6.10001 7.4 6.10001 8C6.10001 9 6.80001 9.8 7.80001 10C8.30001 11.6 9.00001 13.2 9.70001 14.7C7.10001 13.2 4.70001 11.5 2.40001 9.5C2.20001 10.3 2.10001 11.1 2.10001 11.9C4.60001 13.9 7.30001 15.7 10.1 17.2C10.2 18.2 11 19 12 19C12.6 20 13.2 20.9 13.9 21.8C14.6 21.7 15.3 21.5 15.9 21.2C15.4 20.5 14.9 19.8 14.4 19.1C15.5 19.5 16.5 19.9 17.6 20.2C18.3 19.8 18.9 19.2 19.4 18.6C17.6 18.1 15.7 17.5 14 16.7C13.9 15.8 13.1 15 12 15Z" fill="currentColor"/>
+														</svg></span>
+														<!--end::Svg Icon-->
+													</span>
+												</div>
+												<!--end::Symbol-->
+												<!--begin::Text-->
+												<div class="d-flex flex-column">
+													<a href="#" class="text-dark text-hover-primary fs-6 fw-bolder">
+														LivePeer API</a>
+													<span class="text-muted fw-bold">Testing . . .</span>
+												</div>
+												<!--end::Text-->
+											</div>
+											<!--end::Item-->
+										</div>
+										<!--end::Body-->
+									</div>
+								</div>
+								<!--end::Col-->
+							</div>
+							<!--end::Row-->
+						</div>
+						<!--end::Menu-->
+						<!--begin::Footer-->
+						<div class="d-flex flex-column-auto flex-center">
+							<!--begin::Navs-->
+							<ul class="menu fw-bold order-1">
+								<li class="menu-item">
+									<a href="https://0xrig.com/?from=client" target="_blank" class="menu-link text-white opacity-50 opacity-100-hover px-3">
+										<!--begin::Svg Icon | path: media/icons/duotune/general/gen017.svg-->
+										<span class="svg-icon svg-icon-white svg-icon-2hx"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+										<path opacity="0.3" d="M5 8.04999L11.8 11.95V19.85L5 15.85V8.04999Z" fill="currentColor"/>
+										<path d="M20.1 6.65L12.3 2.15C12 1.95 11.6 1.95 11.3 2.15L3.5 6.65C3.2 6.85 3 7.15 3 7.45V16.45C3 16.75 3.2 17.15 3.5 17.25L11.3 21.75C11.5 21.85 11.6 21.85 11.8 21.85C12 21.85 12.1 21.85 12.3 21.75L20.1 17.25C20.4 17.05 20.6 16.75 20.6 16.45V7.45C20.6 7.15 20.4 6.75 20.1 6.65ZM5 15.85V7.95L11.8 4.05L18.6 7.95L11.8 11.95V19.85L5 15.85Z" fill="currentColor"/>
+										</svg></span>
+										<!--end::Svg Icon-->
+										 0xrig.com  <small style="padding-left:5px; color:gold;"> v.0.0.0</small></a>
+								</li>
+							</ul>
+							<!--end::Navs-->
+						</div>
+						<!--end::Footer-->
+					</div>
+					<!--begin::Content-->
+				</div>
+				<!--begin::Content-->
+			</div>
+			<!--end::Page-->
+		</div>
+		<!--end::Root-->
+		<!--end::Main-->
+		<!--begin::Javascript-->
+		<script>var hostUrl = "themes/original/assets/";</script>
+		<!--begin::Global Javascript Bundle(used by all pages)-->
+		<script src="themes/original/assets/plugins/global/plugins.bundle.js"></script>
+		<script src="themes/original/assets/js/scripts.bundle.js"></script>
+		<!--end::Global Javascript Bundle-->
+		<script>
+			'use strict';
+			
+			const iconColorSet = {
+				0: {
+					bg: 'primary',
+					icon: 'info',
+					hover: 'primary'
+				},
+				1: {
+					bg: 'success',
+					icon: 'success',
+					hover: 'primary'
+				},
+				2: {
+					bg: 'warning',
+					icon: 'warning',
+					hover: 'primary'
+				},
+				3: {
+					bg: 'danger',
+					icon: 'danger',
+					hover: 'primary'
+				}
+			}
+			
+			const icons = {
+			server: `
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+					<path opacity="0.3" d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z" fill="currentColor"></path>
+					<path d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z" fill="currentColor"></path>
+				</svg>`,
+			file: `
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+				<path opacity="0.3" d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM12.5 18C12.5 17.4 12.6 17.5 12 17.5H8.5C7.9 17.5 8 17.4 8 18C8 18.6 7.9 18.5 8.5 18.5L12 18C12.6 18 12.5 18.6 12.5 18ZM16.5 13C16.5 12.4 16.6 12.5 16 12.5H8.5C7.9 12.5 8 12.4 8 13C8 13.6 7.9 13.5 8.5 13.5H15.5C16.1 13.5 16.5 13.6 16.5 13ZM12.5 8C12.5 7.4 12.6 7.5 12 7.5H8C7.4 7.5 7.5 7.4 7.5 8C7.5 8.6 7.4 8.5 8 8.5H12C12.6 8.5 12.5 8.6 12.5 8Z" fill="currentColor"/>
+				<rect x="7" y="17" width="6" height="2" rx="1" fill="currentColor"/>
+				<rect x="7" y="12" width="10" height="2" rx="1" fill="currentColor"/>
+				<rect x="7" y="7" width="6" height="2" rx="1" fill="currentColor"/>
+				<path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="currentColor"/>
+				</svg>
+			`,
+			shield: `
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+					<path opacity="0.3" d="M20.5543 4.37824L12.1798 2.02473C12.0626 1.99176 11.9376 1.99176 11.8203 2.02473L3.44572 4.37824C3.18118 4.45258 3 4.6807 3 4.93945V13.569C3 14.6914 3.48509 15.8404 4.4417 16.984C5.17231 17.8575 6.18314 18.7345 7.446 19.5909C9.56752 21.0295 11.6566 21.912 11.7445 21.9488C11.8258 21.9829 11.9129 22 12.0001 22C12.0872 22 12.1744 21.983 12.2557 21.9488C12.3435 21.912 14.4326 21.0295 16.5541 19.5909C17.8169 18.7345 18.8277 17.8575 19.5584 16.984C20.515 15.8404 21 14.6914 21 13.569V4.93945C21 4.6807 20.8189 4.45258 20.5543 4.37824Z" fill="currentColor"></path>
+					<path d="M12.0006 11.1542C13.1434 11.1542 14.0777 10.22 14.0777 9.0771C14.0777 7.93424 13.1434 7 12.0006 7C10.8577 7 9.92348 7.93424 9.92348 9.0771C9.92348 10.22 10.8577 11.1542 12.0006 11.1542Z" fill="currentColor"></path>
+					<path d="M15.5652 13.814C15.5108 13.6779 15.4382 13.551 15.3566 13.4331C14.9393 12.8163 14.2954 12.4081 13.5697 12.3083C13.479 12.2993 13.3793 12.3174 13.3067 12.3718C12.9257 12.653 12.4722 12.7981 12.0006 12.7981C11.5289 12.7981 11.0754 12.653 10.6944 12.3718C10.6219 12.3174 10.5221 12.2902 10.4314 12.3083C9.70578 12.4081 9.05272 12.8163 8.64456 13.4331C8.56293 13.551 8.49036 13.687 8.43595 13.814C8.40875 13.8684 8.41781 13.9319 8.44502 13.9864C8.51759 14.1133 8.60828 14.2403 8.68991 14.3492C8.81689 14.5215 8.95295 14.6757 9.10715 14.8208C9.23413 14.9478 9.37925 15.0657 9.52439 15.1836C10.2409 15.7188 11.1026 15.9999 11.9915 15.9999C12.8804 15.9999 13.7421 15.7188 14.4586 15.1836C14.6038 15.0748 14.7489 14.9478 14.8759 14.8208C15.021 14.6757 15.1661 14.5215 15.2931 14.3492C15.3838 14.2312 15.4655 14.1133 15.538 13.9864C15.5833 13.9319 15.5924 13.8684 15.5652 13.814Z" fill="currentColor"></path>
+				</svg>
+			`,
+			rig: `
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+				<path opacity="0.3" d="M11.8 5.2L17.7 8.6V15.4L11.8 18.8L5.90001 15.4V8.6L11.8 5.2ZM11.8 2C11.5 2 11.2 2.1 11 2.2L3.8 6.4C3.3 6.7 3 7.3 3 7.9V16.2C3 16.8 3.3 17.4 3.8 17.7L11 21.9C11.3 22 11.5 22.1 11.8 22.1C12.1 22.1 12.4 22 12.6 21.9L19.8 17.7C20.3 17.4 20.6 16.8 20.6 16.2V7.9C20.6 7.3 20.3 6.7 19.8 6.4L12.6 2.2C12.4 2.1 12.1 2 11.8 2Z" fill="currentColor"/>
+				<path d="M11.8 8.69995L8.90001 10.3V13.7L11.8 15.3L14.7 13.7V10.3L11.8 8.69995Z" fill="currentColor"/>
+				</svg>
+			`,
+			net: `
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+				<path opacity="0.3" d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" fill="currentColor"/>
+				<path d="M19 10.4C19 10.3 19 10.2 19 10C19 8.9 18.1 8 17 8H16.9C15.6 6.2 14.6 4.29995 13.9 2.19995C13.3 2.09995 12.6 2 12 2C11.9 2 11.8 2 11.7 2C12.4 4.6 13.5 7.10005 15.1 9.30005C15 9.50005 15 9.7 15 10C15 11.1 15.9 12 17 12C17.1 12 17.3 12 17.4 11.9C18.6 13 19.9 14 21.4 14.8C21.4 14.8 21.5 14.8 21.5 14.9C21.7 14.2 21.8 13.5 21.9 12.7C20.9 12.1 19.9 11.3 19 10.4Z" fill="currentColor"/>
+				<path d="M12 15C11 13.1 10.2 11.2 9.60001 9.19995C9.90001 8.89995 10 8.4 10 8C10 7.1 9.40001 6.39998 8.70001 6.09998C8.40001 4.99998 8.20001 3.90005 8.00001 2.80005C7.30001 3.10005 6.70001 3.40002 6.20001 3.90002C6.40001 4.80002 6.50001 5.6 6.80001 6.5C6.40001 6.9 6.10001 7.4 6.10001 8C6.10001 9 6.80001 9.8 7.80001 10C8.30001 11.6 9.00001 13.2 9.70001 14.7C7.10001 13.2 4.70001 11.5 2.40001 9.5C2.20001 10.3 2.10001 11.1 2.10001 11.9C4.60001 13.9 7.30001 15.7 10.1 17.2C10.2 18.2 11 19 12 19C12.6 20 13.2 20.9 13.9 21.8C14.6 21.7 15.3 21.5 15.9 21.2C15.4 20.5 14.9 19.8 14.4 19.1C15.5 19.5 16.5 19.9 17.6 20.2C18.3 19.8 18.9 19.2 19.4 18.6C17.6 18.1 15.7 17.5 14 16.7C13.9 15.8 13.1 15 12 15Z" fill="currentColor"/>
+				</svg>
+			`
+		}
+			
+			const updateStatus = (status=object) =>{
+				$('.statusField').html("");
+				var field = document.querySelector(".statusField");
+				
+				var entry = document.createElement("span");
+				entry.className = 'svg-icon svg-icon-4 svg-icon-white opacity-75 me-3';
+				// entry.setAttribute("style", ``);
+				entry.insertAdjacentHTML("beforeend", `<i class="bi bi-circle-fill text-${status.class}"></i>`);
+				field.appendChild(entry);
+				
+				entry = document.createElement("span");
+				entry.className = 'text-white opacity-75';
+				// entry.setAttribute("style", ``);
+				entry.insertAdjacentHTML("beforeend", `${status.text}`);
+				field.appendChild(entry);
+			}
+			
+			const updateWallet = (wallet=object) =>{
+				$('.walletField').html("");
+				var field = document.querySelector(".walletField");
+				
+				var entry = document.createElement("span");
+				entry.className = 'svg-icon svg-icon-white svg-icon-base';
+				// entry.setAttribute("style", ``);
+				entry.insertAdjacentHTML("beforeend", `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+				<path opacity="0.3" d="M3.20001 5.91897L16.9 3.01895C17.4 2.91895 18 3.219 18.1 3.819L19.2 9.01895L3.20001 5.91897Z" fill="currentColor"/>
+				<path opacity="0.3" d="M13 13.9189C13 12.2189 14.3 10.9189 16 10.9189H21C21.6 10.9189 22 11.3189 22 11.9189V15.9189C22 16.5189 21.6 16.9189 21 16.9189H16C14.3 16.9189 13 15.6189 13 13.9189ZM16 12.4189C15.2 12.4189 14.5 13.1189 14.5 13.9189C14.5 14.7189 15.2 15.4189 16 15.4189C16.8 15.4189 17.5 14.7189 17.5 13.9189C17.5 13.1189 16.8 12.4189 16 12.4189Z" fill="currentColor"/>
+				<path d="M13 13.9189C13 12.2189 14.3 10.9189 16 10.9189H21V7.91895C21 6.81895 20.1 5.91895 19 5.91895H3C2.4 5.91895 2 6.31895 2 6.91895V20.9189C2 21.5189 2.4 21.9189 3 21.9189H19C20.1 21.9189 21 21.0189 21 19.9189V16.9189H16C14.3 16.9189 13 15.6189 13 13.9189Z" fill="currentColor"/>
+				</svg>`);
+				field.appendChild(entry);
+				
+				entry = document.createElement("span");
+				entry.className = 'text-white opacity-75';
+				entry.setAttribute("style", `padding-left: 10px;`);
+				entry.insertAdjacentHTML("beforeend", `${wallet.address}`);
+				field.appendChild(entry);
+			}
+			
+			const updateBalance = (balance=object) =>{
+				$('.balanceField').html("");
+				var field = document.querySelector(".balanceField");
+				
+				var entry = document.createElement("span");
+				entry.className = 'svg-icon svg-icon-white svg-icon-base';
+				// entry.setAttribute("style", ``);
+				entry.insertAdjacentHTML("beforeend", `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+				<path d="M20 19.725V18.725C20 18.125 19.6 17.725 19 17.725H5C4.4 17.725 4 18.125 4 18.725V19.725H3C2.4 19.725 2 20.125 2 20.725V21.725H22V20.725C22 20.125 21.6 19.725 21 19.725H20Z" fill="currentColor"/>
+				<path opacity="0.3" d="M22 6.725V7.725C22 8.325 21.6 8.725 21 8.725H18C18.6 8.725 19 9.125 19 9.725C19 10.325 18.6 10.725 18 10.725V15.725C18.6 15.725 19 16.125 19 16.725V17.725H15V16.725C15 16.125 15.4 15.725 16 15.725V10.725C15.4 10.725 15 10.325 15 9.725C15 9.125 15.4 8.725 16 8.725H13C13.6 8.725 14 9.125 14 9.725C14 10.325 13.6 10.725 13 10.725V15.725C13.6 15.725 14 16.125 14 16.725V17.725H10V16.725C10 16.125 10.4 15.725 11 15.725V10.725C10.4 10.725 10 10.325 10 9.725C10 9.125 10.4 8.725 11 8.725H8C8.6 8.725 9 9.125 9 9.725C9 10.325 8.6 10.725 8 10.725V15.725C8.6 15.725 9 16.125 9 16.725V17.725H5V16.725C5 16.125 5.4 15.725 6 15.725V10.725C5.4 10.725 5 10.325 5 9.725C5 9.125 5.4 8.725 6 8.725H3C2.4 8.725 2 8.325 2 7.725V6.725L11 2.225C11.6 1.925 12.4 1.925 13.1 2.225L22 6.725ZM12 3.725C11.2 3.725 10.5 4.425 10.5 5.225C10.5 6.025 11.2 6.725 12 6.725C12.8 6.725 13.5 6.025 13.5 5.225C13.5 4.425 12.8 3.725 12 3.725Z" fill="currentColor"/>
+				</svg>`);
+				field.appendChild(entry);
+				
+				entry = document.createElement("span");
+				entry.className = 'text-white opacity-75';
+				entry.setAttribute("style", `padding-left: 10px;`);
+				entry.insertAdjacentHTML("beforeend", `${balance.total} ${balance.token}`);
+				field.appendChild(entry);
+				
+			}
+			
+			const updateSteps = (steps=object) =>{
+				/*
+					* Example of item inside Array.
+					{title:"0xCore Server",text:"Online | Listening on Port: 3000", status:1, icon:'server'} 
+					*
+				*/
+				$('.stepsContainer').html("");
+				var list = document.querySelector(".stepsContainer");
+				steps.map((item, index)=>{
+					var liContent =`
+							<!--begin::Symbol-->
+							<div class="symbol symbol-50px me-5">
+								<span class="symbol-label bg-light-${iconColorSet[item.status].bg}">
+									<span class="svg-icon svg-icon-2x svg-icon-${iconColorSet[item.status].icon}">
+										${icons[item.icon]}
+									</span>
+								</span>
+							</div>
+							<!--end::Symbol-->
+							<!--begin::Text-->
+							<div class="d-flex flex-column">
+								<a href="#" class="text-dark text-hover-${iconColorSet[item.status].hover} fs-6 fw-bolder">
+									${item.title}</a>
+								<span class="text-muted fw-bold">${item.text}</span>
+							</div>
+							<!--end::Text-->
+					`;
+					
+					var entry = document.createElement("div");
+					entry.className = (index+1 < steps.length) ? 'd-flex align-items-center mb-7' : 'd-flex align-items-center mb-0' ;
+					// entry.setAttribute("style", ``);
+					entry.insertAdjacentHTML("beforeend", `${liContent}`);
+					list.appendChild(entry);
+				})
+				return false;
+				// If everything is fine.
+				return true;
+			}
+			
+            const refresh = (e)=>{
+                e.preventDefault();
+                location.reload();
+                return false;
+            }
 
-    });
-</script>
-</body>
+			$(window).on('load', function () {
+				$('.flex-root').fadeIn('slow');
+				updateStatus({class:"info", text:"Loading ..." })
+				updateWallet({address:"0x00"})
+				updateBalance({total:0, token:"MATIC"})
+				
+				// Call api/ping :: Full Onboarding (0xCore Server, .env File, PK, Phone Profile, LivePeer API Key)
+				console.log('Welcome to 0xrig', 'Checking for updates', 'Loading theme folder');
+				var url = `${window.location.href.split("gitpod.io").shift().replace("https://8000","https://3000")}gitpod.io/0xrig/ping`
+				/**/
+				$.ajax({
+						url: url,
+						dataType: 'jsonp',
+						success: function(rig){
+							// 0xrig Server is online.
+                            /* Example of Server Response.
+                                {
+                                    progress: "1/5",
+                                    status: {
+                                        class:"danger",
+                                        text:"Server Offline" 
+                                    },
+                                    wallet: {
+                                        address:"0x00"
+                                    },
+                                    balance: {
+                                        total:0,
+                                        token:"MATIC"
+                                    },
+                                    steps: [
+                                        {
+                                            title:"0xCore Server",
+                                            text:"Offline | Server not found",
+                                            status:3,
+                                            icon:'server'
+                                        }
+                                    ]
+                                }
+                            */
+                            $('.0xVarSteps').html(rig.progress);
+                            updateStatus(rig.status)
+							updateWallet(rig.wallet)
+							updateBalance(rig.balance)
+							updateSteps(rig.steps)
+                            if(+!!rig.ready){
+                                $.ajax({
+                                    // Check for Update available?
+                                    url: rig.data.latest,
+                                    success: function(latest){
+                                        var resp = JSON.parse(latest)
+                                        if(resp.version !== rig.data.version){
+                                            console.log(`Update Available: ${resp.version}`)
+                                        }else{
+                                            console.log(`You have the latest version: ${rig.data.version}`)
+                                            // Redirect to active THEME folder.
+                                            setTimeout(()=>{
+                                                // window.location.href = rig.data.theme;
+                                            },999)
+                                        }
+                                    }
+                                })
+                            }else{
+                                // Something is missing. Rig is not yet ready.
+                                
+                            }
+							
+						},
+						error: (e)=>{
+							// 0xrig Server is offline.
+							console.log(e.status)
+                            $('.0xVarSteps').html("0/5");
+                            updateStatus({class:"danger", text:"Server Offline" })
+							updateWallet({address:"0x00"})
+							updateBalance({total:0, token:"MATIC"})
+							updateSteps([
+								{title:"0xCore Server",text:"Offline | Server not found", status:3, icon:'server'} ,
+								{title:".env File",text:"Not Found", status:0, icon:'file'} ,
+								{title:"Private Key",text:"Not Found", status:0, icon:'shield'} ,
+								{title:"Phone Profile",text:"Not Found", status:0, icon:'rig'} ,
+								{title:"LivePeer API",text:"Not Found", status:0, icon:'net'} 
+							])
+                            $('.0xBtnRefresh').fadeIn('slow'); // This should be triggered by API response.
+						}
+				});
+				/**/
+				
+			});
+		</script>
+		<!--end::Javascript-->
+	</body>
+	<!--end::Body-->
 </html>
