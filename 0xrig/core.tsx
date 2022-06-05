@@ -18,10 +18,34 @@ exports.isJSON = function(str){
 
 const processRigRequest = (endpoint, data)=>{
   if(endpoint === `ping`){
+    // Find ENV file.
+    // Private Key. Is this needed?
+    // Phone Profile (LENS is gone).
+    // LivePeer API. (Move to LocalStorage)
     return {
       version: getEnvValue('VERSION'),
       theme: getEnvValue('THEME'),
-      latest: getEnvValue('LATEST_VERSION')
+      latest: getEnvValue('LATEST_VERSION'),
+      ready: !0,
+      status: {
+        class:"success",
+        text:"Server Online"
+      },
+      progress: "1/5",
+      wallet: {
+        address:"0x00"
+      },
+      balance: {
+        total:0,
+        token:"MATIC"
+      },
+      steps: [
+        {title:"0xCore Server",text:"Online | Server running", status:1, icon:'server'} ,
+        {title:".env File",text:"Not Found", status:0, icon:'file'} ,
+        {title:"Private Key",text:"Not Found", status:0, icon:'shield'} ,
+        {title:"Phone Profile",text:"Not Found", status:0, icon:'rig'} ,
+        {title:"LivePeer API",text:"Not Found", status:0, icon:'net'} 
+      ]
     }
   }
   return data

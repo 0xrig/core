@@ -331,7 +331,7 @@
 			`
 		}
 			
-			const updateStatus = (status=object) =>{
+			const updateStatus = (status) =>{
 				$('.statusField').html("");
 				var field = document.querySelector(".statusField");
 				
@@ -474,12 +474,12 @@
                                     ]
                                 }
                             */
-                            $('.0xVarSteps').html(rig.progress);
-                            updateStatus(rig.status)
-							updateWallet(rig.wallet)
-							updateBalance(rig.balance)
-							updateSteps(rig.steps)
-                            if(+!!rig.ready){
+                            $('.0xVarSteps').html(rig.data.progress);
+                            updateStatus(rig.data.status)
+							updateWallet(rig.data.wallet)
+							updateBalance(rig.data.balance)
+							updateSteps(rig.data.steps)
+                            if(+!!rig.data.ready){
                                 $.ajax({
                                     // Check for Update available?
                                     url: rig.data.latest,
